@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+
+  moodle:
+    build: .
+    container_name: moodle-app
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - moodledata:/var/www/moodledata
+
+  db:
+    image: mariadb:10.11
+    container_name: moodle-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: moodle
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  moodledata:
+  dbdata:
